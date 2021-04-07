@@ -1,0 +1,27 @@
+.align-center{
+    text-align: center;
+}
+
+.color-background{
+    background-color: #EEEEEE;
+}
+
+.green-template{
+    color: green;
+    text-align: center;
+}
+
+.green-template > .webix_icon{
+    display: inline;
+    font-weight: bold;
+}
+
+.list-color{
+    background-color: #EEE;
+    font-weight: 500;
+}
+
+.section-font-size > .webix_template {
+    font-size: 14px;
+}
+
