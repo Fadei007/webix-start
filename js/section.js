@@ -36,6 +36,7 @@ function addNewFilm(){
         const item = filmForm.getValues();
 
         //Protection against XSS
+ 
         item.title = webix.template.escape(item.title);
 
         $$(dataTable.id).add(item);
