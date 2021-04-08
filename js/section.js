@@ -32,15 +32,12 @@ function addNewFilm(){
     const filmForm = $$(form.id);
 
     if(filmForm.validate()){
-
-        // Protection from XSS 
-        const title =  filmForm.elements.title;
-        const value = title.getValue();
-        const safeValue = webix.template.escape(value);
-        title.setValue(safeValue);
-
-
+        
         const item = filmForm.getValues();
+
+        //Protection against XSS
+        item.title = webix.template.escape(item.title);
+
         $$(dataTable.id).add(item);
 
         webix.message({
@@ -48,7 +45,7 @@ function addNewFilm(){
             type: "success",
             expire: 1000
         });
-    }
+   }
 };
 
 function clearForm(){
