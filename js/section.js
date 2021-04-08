@@ -26,11 +26,19 @@ const dataTable = {
     data: small_film_set
 };
 
+
 function addNewFilm(){
 
     const filmForm = $$(form.id);
 
     if(filmForm.validate()){
+
+        // Protection from XSS 
+        const title =  filmForm.elements.title
+        const value = title.getValue()
+        const safeValue = webix.template.escape(val)
+        title.setValue(safeValue)
+
 
         const item = filmForm.getValues();
         $$(dataTable.id).add(item);
@@ -114,7 +122,9 @@ const form = {
         {}
     ],
     rules:{
-        title: webix.rules.isNotEmpty,
+        title: function(value){
+            return webix.rules.isNotEmpty(value) ;
+        },
         year: function(value){
             return value >= 1970 && value <= new Date().getFullYear() && webix.rules.isNumber(value);
         },
