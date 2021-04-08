@@ -34,10 +34,10 @@ function addNewFilm(){
     if(filmForm.validate()){
 
         // Protection from XSS 
-        const title =  filmForm.elements.title
-        const value = title.getValue()
-        const safeValue = webix.template.escape(value)
-        title.setValue(safeValue)
+        const title =  filmForm.elements.title;
+        const value = title.getValue();
+        const safeValue = webix.template.escape(value);
+        title.setValue(safeValue);
 
 
         const item = filmForm.getValues();
