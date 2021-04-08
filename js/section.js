@@ -27,8 +27,11 @@ const dataTable = {
 };
 
 function addNewFilm(){
-    let item = $$(form.id).getValues();
-    $$(dataTable.id).add(item)
+
+    if($$(form.id).validate()){
+        let item = $$(form.id).getValues();
+        $$(dataTable.id).add(item)
+    }
 }
 
 function clearForm(){
@@ -87,7 +90,20 @@ const form = {
         },
         formButtons,
         {}
-    ]
+    ],
+    rules:{
+        title: webix.rules.isNotEmpty,
+        year: function(value){
+            return value > 1970 && value < new Date().getFullYear()
+        },
+        rating: function(value){
+            return webix.rules.isNotEmpty && value != 0
+        },
+        votes: function(value){
+            return value < 100000
+        }
+
+    }
 };
 
 export const section = {
