@@ -20,10 +20,20 @@ const sideBar = {
 
 const dataTable = {
     view: "datatable",
+    id: "filmsTable",
     autoConfig: true,
     scroll: "y",
     data: small_film_set
 };
+
+function addNewFilm(){
+    let item = $$(form.id).getValues();
+    $$(dataTable.id).add(item)
+}
+
+function clearForm(){
+    $$(form.id).clear()
+}
 
 const formButtons = {
     margin: 10,
@@ -32,16 +42,20 @@ const formButtons = {
             view: "button", 
             value: "Add new",
             css: "webix_primary",
+            click: addNewFilm
+            
         },
         { 
             view: "button", 
-            value: "Clear"
+            value: "Clear",
+            click: clearForm
         },
     ]
 };
 
 const form = {
     view: "form",
+    id: 'filmForm',
     width: 300,
     scroll: false,
     elements: [
@@ -53,62 +67,34 @@ const form = {
         },
         { 
             view: "text",
-            label: "Title"
+            label: "Title",
+            name: "title"
         },
         { 
             view: "text",
-            label: "Year"
+            label: "Year",
+            name: "year"
         },
         { 
             view: "text",
-            label: "Rating"
+            label: "Rating",
+            name: "rating"
         },
         { 
             view: "text",
-            label: "Votes"
+            label: "Votes",
+            name: "votes"
         },
-        formButtons
-        
+        formButtons,
+        {}
     ]
 };
-
-
 
 export const section = {
     cols: [
        sideBar,
       { view: "resizer" },
        dataTable,
-       {
-        view: "form",
-        width: 300,
-        scroll: false,
-        elements: [
-            {
-                view: "template",
-                template: "edit films",
-                type: "section",
-                css: "section-font-size"
-            },
-            { 
-                view: "text",
-                label: "Title"
-            },
-            { 
-                view: "text",
-                label: "Year"
-            },
-            { 
-                view: "text",
-                label: "Rating"
-            },
-            { 
-                view: "text",
-                label: "Votes"
-            },
-            formButtons,
-            {}
-        ]
-       }
+       form
     ]
 }
