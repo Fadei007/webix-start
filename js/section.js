@@ -29,13 +29,21 @@ const dataTable = {
 function addNewFilm(){
 
     if($$(form.id).validate()){
+
         let item = $$(form.id).getValues();
         $$(dataTable.id).add(item)
+
+        webix.message({
+            text: "Validation is succsessful",
+            type: "success",
+            expire: 1000
+        })
     }
 }
 
 function clearForm(){
     $$(form.id).clear()
+    $$(form.id).clearValidation()
 }
 
 const formButtons = {
@@ -58,7 +66,7 @@ const formButtons = {
 
 const form = {
     view: "form",
-    id: 'filmForm',
+    id: "filmForm",
     width: 300,
     scroll: false,
     elements: [
@@ -71,22 +79,26 @@ const form = {
         { 
             view: "text",
             label: "Title",
-            name: "title"
+            name: "title",
+            invalidMessage: "Enter the title of the movie"
         },
         { 
             view: "text",
             label: "Year",
-            name: "year"
+            name: "year",
+            invalidMessage: `Year isn't between 1970 - ${new Date().getFullYear()}`
         },
         { 
             view: "text",
             label: "Rating",
-            name: "rating"
+            name: "rating",
+            invalidMessage: "Rating cannot be empty or 0"
         },
         { 
             view: "text",
             label: "Votes",
-            name: "votes"
+            name: "votes",
+            invalidMessage: "Votes must be less than 100000"
         },
         formButtons,
         {}
@@ -102,7 +114,6 @@ const form = {
         votes: function(value){
             return value < 100000
         }
-
     }
 };
 
