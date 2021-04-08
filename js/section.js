@@ -36,7 +36,7 @@ function addNewFilm(){
         // Protection from XSS 
         const title =  filmForm.elements.title
         const value = title.getValue()
-        const safeValue = webix.template.escape(val)
+        const safeValue = webix.template.escape(value)
         title.setValue(safeValue)
 
 
