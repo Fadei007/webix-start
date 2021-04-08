@@ -122,9 +122,7 @@ const form = {
         {}
     ],
     rules:{
-        title: function(value){
-            return webix.rules.isNotEmpty(value) ;
-        },
+        title:  webix.rules.isNotEmpty,
         year: function(value){
             return value >= 1970 && value <= new Date().getFullYear() && webix.rules.isNumber(value);
         },
