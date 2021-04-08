@@ -1,6 +1,6 @@
-import {profile_menu} from "../data/testdata.js"
+import {profile_menu} from "../data/testdata.js";
 
-export const popupMenu = webix.ui({
+export const popupMenu = {
         view:"popup", 
         width: 300,
         body:{
@@ -9,4 +9,4 @@ export const popupMenu = webix.ui({
             autoheight:true,
             select: true
         }
-    });
+    }

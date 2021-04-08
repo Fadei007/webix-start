@@ -1,4 +1,4 @@
-import {popupMenu} from "./header-popup.js"
+import {popupMenu} from "./header-popup.js";
 
 const profileButton = {
     view: "button", 

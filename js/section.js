@@ -28,18 +28,20 @@ const dataTable = {
 
 function addNewFilm(){
 
-    if($$(form.id).validate()){
+    const filmForm = $$(form.id);
 
-        let item = $$(form.id).getValues();
-        $$(dataTable.id).add(item)
+    if(filmForm.validate()){
+
+        const item = filmForm.getValues();
+        $$(dataTable.id).add(item);
 
         webix.message({
             text: "Validation is succsessful",
             type: "success",
             expire: 1000
-        })
+        });
     }
-}
+};
 
 function clearForm(){
     
@@ -48,11 +50,11 @@ function clearForm(){
         text: "Do you realy want to clean up the form?"
     }).then(
         function(){
-            $$(form.id).clear()
-            $$(form.id).clearValidation()
+            $$(form.id).clear();
+            $$(form.id).clearValidation();
         }
     )
-}
+};
 
 const formButtons = {
     margin: 10,
@@ -114,13 +116,13 @@ const form = {
     rules:{
         title: webix.rules.isNotEmpty,
         year: function(value){
-            return value > 1970 && value < new Date().getFullYear()
+            return value >= 1970 && value <= new Date().getFullYear() && webix.rules.isNumber(value);
         },
         rating: function(value){
-            return webix.rules.isNotEmpty && value != 0
+            return webix.rules.isNotEmpty(value) && value != 0 && webix.rules.isNumber(value);
         },
         votes: function(value){
-            return value < 100000
+            return value < 100000 && webix.rules.isNumber(value);
         }
     }
 };
