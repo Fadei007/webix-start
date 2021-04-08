@@ -42,8 +42,16 @@ function addNewFilm(){
 }
 
 function clearForm(){
-    $$(form.id).clear()
-    $$(form.id).clearValidation()
+    
+    webix.confirm({
+        title: "Form cleaning",
+        text: "Do you realy want to clean up the form?"
+    }).then(
+        function(){
+            $$(form.id).clear()
+            $$(form.id).clearValidation()
+        }
+    )
 }
 
 const formButtons = {
