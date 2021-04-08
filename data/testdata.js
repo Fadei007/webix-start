@@ -13,3 +13,8 @@ export const sideBar_data = [
 	{id:3 , value: "Products"},
 	{id:4 , value: "Locations"},
 ]
+
+export const profile_menu = [
+	{id:1 , value: "Settings"},
+	{id:2 , value: "Logout"},
+]
