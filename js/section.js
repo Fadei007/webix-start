@@ -49,7 +49,7 @@ function addNewFilm(){
 };
 
 function clearForm(){
-    const formId = $$('filmForm');
+    const formId = $$("filmForm");
     webix.confirm({
         title: "Form cleaning",
         text: "Do you realy want to clean up the form?"
@@ -131,8 +131,6 @@ const form = {
         }
     }
 };
-
-console.log(form)
 
 export const section = {
     cols: [
