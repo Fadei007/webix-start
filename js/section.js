@@ -18,8 +18,8 @@ const sideBar = {
             },
             ready: function(){
 
-               this.select("dashboard");
-               //this.select("users");
+               //this.select("dashboard");
+               this.select("users");
 
             }
 

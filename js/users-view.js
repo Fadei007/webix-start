@@ -40,9 +40,20 @@ const usersList = {
     view: "list",
     id: "usersList",
     scroll: "y",
-    template: "#name# from #country#",
+    template: `<div class="fl">
+                    <span>#name# from #country#</span>
+                    <span class="webix_icon wxi-close icon-right"></span>
+                </div>`,
+    onClick: {
+        "wxi-close":function(e, id){
+            this.remove(id);
+              return false;
+        }
+    },
     url: "../data/users.js"
 }
+
+
 
 
 export const users = {

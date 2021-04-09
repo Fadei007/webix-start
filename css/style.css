@@ -32,3 +32,8 @@
 .rank-background{
     background-color: #F4F5F9;
 }
+
+.fl{
+  display: flex;
+  justify-content: space-between;
+}
