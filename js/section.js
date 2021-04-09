@@ -59,13 +59,12 @@ const dataTable = {
         }
     },
     on:{
-        onSelectChange: function(){
+        onAfterSelect: function(){
             const id = this.getSelectedId();
             const item = this.getItem(id);
             
             $$("filmForm").setValues(item);
-            console.log(item[id.column]);
-            
+  
         }
     },
     url: "./data/data.js"
@@ -86,6 +85,8 @@ function addNewFilm(){
         const tableItems = filmsTable.data.pull
         const rank = filmsTable.data.order.length + 1;
 
+        
+
         //Protection against XSS
         formItem.title = webix.template.escape(formItem.title);
 
@@ -100,7 +101,7 @@ function addNewFilm(){
             filmsTable.add(formItem);
             
         };
-    
+
         webix.message({
             text: "Validation is succsessful",
             type: "success",
