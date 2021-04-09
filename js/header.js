@@ -1,10 +1,13 @@
+import {popupMenu} from "./header-popup.js";
+
 const profileButton = {
     view: "button", 
     label: "Profile", 
     autowidth: true,
     css: "webix_transparent",
     type: "icon",
-    icon: "wxi-user"
+    icon: "wxi-user",
+    popup: popupMenu
     
 };
 

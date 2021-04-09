@@ -20,9 +20,45 @@ const sideBar = {
 
 const dataTable = {
     view: "datatable",
+    id: "filmsTable",
     autoConfig: true,
     scroll: "y",
     data: small_film_set
+};
+
+
+function addNewFilm(){
+
+    const filmForm = $$("filmForm");
+
+    if(filmForm.validate()){
+        
+        const item = filmForm.getValues();
+
+        //Protection against XSS
+        item.title = webix.template.escape(item.title);
+
+        $$("filmsTable").add(item);
+
+        webix.message({
+            text: "Validation is succsessful",
+            type: "success",
+            expire: 1000
+        });
+   }
+};
+
+function clearForm(){
+    const formId = $$("filmForm");
+    webix.confirm({
+        title: "Form cleaning",
+        text: "Do you realy want to clean up the form?"
+    }).then(
+        function(){
+            formId.clear();
+            formId.clearValidation();
+        }
+    )
 };
 
 const formButtons = {
@@ -32,16 +68,20 @@ const formButtons = {
             view: "button", 
             value: "Add new",
             css: "webix_primary",
+            click: addNewFilm
+            
         },
         { 
             view: "button", 
-            value: "Clear"
+            value: "Clear",
+            click: clearForm
         },
     ]
 };
 
 const form = {
     view: "form",
+    id: "filmForm",
     width: 300,
     scroll: false,
     elements: [
@@ -53,62 +93,50 @@ const form = {
         },
         { 
             view: "text",
-            label: "Title"
+            label: "Title",
+            name: "title",
+            invalidMessage: "Enter the title of the movie"
         },
         { 
             view: "text",
-            label: "Year"
+            label: "Year",
+            name: "year",
+            invalidMessage: `Year isn't between 1970 - ${new Date().getFullYear()}`
         },
         { 
             view: "text",
-            label: "Rating"
+            label: "Rating",
+            name: "rating",
+            invalidMessage: "Rating cannot be empty or 0"
         },
         { 
             view: "text",
-            label: "Votes"
+            label: "Votes",
+            name: "votes",
+            invalidMessage: "Votes must be less than 100000"
         },
-        formButtons
-        
-    ]
+        formButtons,
+        {}
+    ],
+    rules:{
+        title:  webix.rules.isNotEmpty,
+        year: function(value){
+            return value >= 1970 && value <= new Date().getFullYear() && webix.rules.isNumber(value);
+        },
+        rating: function(value){
+            return webix.rules.isNotEmpty(value) && value != 0 && webix.rules.isNumber(value);
+        },
+        votes: function(value){
+            return value < 100000 && webix.rules.isNumber(value);
+        }
+    }
 };
-
-
 
 export const section = {
     cols: [
        sideBar,
       { view: "resizer" },
        dataTable,
-       {
-        view: "form",
-        width: 300,
-        scroll: false,
-        elements: [
-            {
-                view: "template",
-                template: "edit films",
-                type: "section",
-                css: "section-font-size"
-            },
-            { 
-                view: "text",
-                label: "Title"
-            },
-            { 
-                view: "text",
-                label: "Year"
-            },
-            { 
-                view: "text",
-                label: "Rating"
-            },
-            { 
-                view: "text",
-                label: "Votes"
-            },
-            formButtons,
-            {}
-        ]
-       }
+       form
     ]
 }
