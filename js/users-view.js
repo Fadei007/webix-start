@@ -70,7 +70,7 @@ const usersList = {
     },
     ready: function(){
         const items = $$("usersList").$view.firstElementChild.children;
-
+        
         for(let i = 0; i < 5; i++){
             items[i].style.backgroundColor = `rgb(${randomInteger(0,255)},${randomInteger(0,255)},${randomInteger(0,255)})`
         }

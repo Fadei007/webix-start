@@ -1,5 +1,6 @@
 import {small_film_set, sideBar_data } from "../data/testdata.js";
 import {users} from "./users-view.js";
+import {products} from "./products-view.js";
 
 const sideBar = {
     rows: [
@@ -19,7 +20,7 @@ const sideBar = {
             ready: function(){
 
                //this.select("dashboard");
-               this.select("users");
+               this.select("products");
 
             }
 
@@ -219,7 +220,7 @@ export const section = {
                 },
                 {
                     id: "products",
-                    template: "Products"
+                    cols:[products]
                 },
                 {
                     id: "admin",
