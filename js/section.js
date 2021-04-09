@@ -29,17 +29,16 @@ const dataTable = {
 
 function addNewFilm(){
 
-    const filmForm = $$(form.id);
+    const filmForm = $$("filmForm");
 
     if(filmForm.validate()){
         
         const item = filmForm.getValues();
 
         //Protection against XSS
- 
         item.title = webix.template.escape(item.title);
 
-        $$(dataTable.id).add(item);
+        $$("filmsTable").add(item);
 
         webix.message({
             text: "Validation is succsessful",
@@ -50,14 +49,14 @@ function addNewFilm(){
 };
 
 function clearForm(){
-    
+    const formId = $$('filmForm');
     webix.confirm({
         title: "Form cleaning",
         text: "Do you realy want to clean up the form?"
     }).then(
         function(){
-            $$(form.id).clear();
-            $$(form.id).clearValidation();
+            formId.clear();
+            formId.clearValidation();
         }
     )
 };
@@ -132,6 +131,8 @@ const form = {
         }
     }
 };
+
+console.log(form)
 
 export const section = {
     cols: [
