@@ -48,10 +48,6 @@ function sortData(sortingType){
     $$("usersList").sort("age", sortingType);
 };
 
-function highlitingItems(){
-    
-}
-
 
 const usersList = {
     view: "list",
@@ -63,21 +59,25 @@ const usersList = {
                 </div>`,
     onClick: {
         "wxi-close":function(e, id){
-            $$("ageChart").remove(id)
+            $$("ageChart").remove(id);
             this.remove(id);
-              return false;
+            return false;
         }
     },
+    url: "../data/users.js",
     ready: function(){
-        const items = $$("usersList").$view.firstElementChild.children;
-        
-        for(let i = 0; i < 5; i++){
-            items[i].style.backgroundColor = `rgb(${randomInteger(0,255)},${randomInteger(0,255)},${randomInteger(0,255)})`
+
+        for(let i = 1; i < 6; i++){
+            const randomBgColor = webix.html.createCss({
+                "background-color": `rgb(${randomInteger(0,255)},${randomInteger(0,255)},${randomInteger(0,255)})`
+            });
+            this.addCss(i, randomBgColor);
         }
 
     },
-    url: "../data/users.js"
+
 }
+
 
 const ageChart = {
     view: "chart",

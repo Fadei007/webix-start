@@ -19,8 +19,7 @@ const sideBar = {
             },
             ready: function(){
 
-               //this.select("dashboard");
-               this.select("products");
+               this.select("dashboard");
 
             }
 
@@ -197,6 +196,7 @@ const form = {
         }
     }
 };
+
 
 
 export const section = {
