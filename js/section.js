@@ -60,11 +60,11 @@ const dataTable = {
     },
     on:{
         onSelectChange: function(){
-            const id = this.getSelectedId()
-            const item = this.getItem(id)
+            const id = this.getSelectedId();
+            const item = this.getItem(id);
             
-            $$("filmForm").setValues(item)
-            console.log(item[id.column])
+            $$("filmForm").setValues(item);
+            console.log(item[id.column]);
             
         }
     },
@@ -81,7 +81,7 @@ function addNewFilm(){
     if(filmForm.validate()){
         
         const formItem = filmForm.getValues();
-        const formItemId = formItem.id
+        const formItemId = formItem.id;
         const filmsTable = $$("filmsTable");
         const tableItems = filmsTable.data.pull
         const rank = filmsTable.data.order.length + 1;
