@@ -18,8 +18,8 @@ const sideBar = {
             },
             ready: function(){
 
-               //this.select("dashboard");
-               this.select("users");
+               this.select("dashboard");
+               //this.select("users");
 
             }
 
@@ -39,6 +39,7 @@ const dataTable = {
     view: "datatable",
     id: "filmsTable",
     scroll: "y",
+    select: true,
     hover: "datatable-hover",
     leftSplit: 1,
     
@@ -57,8 +58,20 @@ const dataTable = {
               return false;
         }
     },
-    url: "./data/data.js",
+    on:{
+        onSelectChange: function(){
+            const id = this.getSelectedId()
+            const item = this.getItem(id)
+            
+            $$("filmForm").setValues(item)
+            console.log(item[id.column])
+            
+        }
+    },
+    url: "./data/data.js"
 };
+
+
 
 
 function addNewFilm(){
@@ -67,19 +80,36 @@ function addNewFilm(){
 
     if(filmForm.validate()){
         
-        const item = filmForm.getValues();
+        const formItem = filmForm.getValues();
+        const formItemId = formItem.id
+        const filmsTable = $$("filmsTable");
+        const tableItems = filmsTable.data.pull
+        const rank = filmsTable.data.order.length + 1;
 
         //Protection against XSS
-        item.title = webix.template.escape(item.title);
+        formItem.title = webix.template.escape(formItem.title);
 
-        $$("filmsTable").add(item);
 
+        if(tableItems[formItemId]){
+
+            filmsTable.updateItem(formItemId, formItem);
+
+        }else{
+
+            formItem.rank = rank;
+            filmsTable.add(formItem);
+            
+        };
+    
         webix.message({
             text: "Validation is succsessful",
             type: "success",
             expire: 1000
         });
+        
    }
+
+
 };
 
 function clearForm(){
