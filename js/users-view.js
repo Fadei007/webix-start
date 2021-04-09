@@ -5,12 +5,9 @@ const dataSortInterface= {
             id: "usersInput",
             on: {
                 onTimedKeyPress: function(){
-                    const value = this.getValue().toLowerCase();
-
-                    $$("usersList").filter(function(obj){
-                        return obj.name.toLowerCase().indexOf(value) !== -1     ||
-                               obj.country.toLowerCase().indexOf(value) !== -1  ;
-                    })
+                    const inputValue = this.getValue().toLowerCase();
+                    filterData("usersList", inputValue);
+                    filterData("ageChart", inputValue);
 
                 }
             }
@@ -21,7 +18,7 @@ const dataSortInterface= {
             autowidth: true,
             css: "webix_primary",
             click: function(){
-                $$("usersList").sort("age", "asc") 
+                sortData("asc");
             }
         },
         {
@@ -30,11 +27,25 @@ const dataSortInterface= {
             autowidth: true,
             css: "webix_primary",
             click: function(){
-                $$("usersList").sort("age", "desc") 
+                sortData("desc");
             }
         }
     ]
 }
+
+function filterData(viewId, inputValue){
+    $$(viewId).filter(function(obj){
+            return obj.name.toLowerCase().indexOf(inputValue) !== -1     ||
+                   obj.country.toLowerCase().indexOf(inputValue) !== -1  ;
+        })
+
+}
+
+function sortData(sortingType){
+    $$("ageChart").sort("age", sortingType);
+    $$("usersList").sort("age", sortingType);
+}
+
 
 const usersList = {
     view: "list",
@@ -46,6 +57,7 @@ const usersList = {
                 </div>`,
     onClick: {
         "wxi-close":function(e, id){
+            $$("ageChart").remove(id)
             this.remove(id);
               return false;
         }
@@ -53,15 +65,31 @@ const usersList = {
     url: "../data/users.js"
 }
 
+const ageChart = {
+    view: "chart",
+    id: "ageChart",
+    type: "bar",
+    barWidth: 30,
+    value: "#age#",
+    xAxis: {
+        title: "Age",
+        template: "#age#"
+    },
+    url: "../data/users.js",
+}
+
+
 
 
 
 export const users = {
+        id: "usersView",
         rows:[
             dataSortInterface,
             usersList,
-        ] 
-        
+            ageChart
+        ]      
 }
+
 
 
