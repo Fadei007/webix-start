@@ -4,9 +4,23 @@ const sideBar = {
     rows: [
         {
             view: "sidebar",
+            id: "sidebar",
             width: 200,
             css: "color-background list-color",
-            data: sideBar_data
+            data: sideBar_data,
+            on: {
+                onAfterSelect: function(id){
+
+                    $$(id).show();
+    
+                }
+            },
+            ready: function(){
+
+               this.select("dashboard");
+
+            }
+
         },
         {
             
@@ -17,6 +31,7 @@ const sideBar = {
         }
     ]
 };
+
 
 const dataTable = {
     view: "datatable",
@@ -132,11 +147,36 @@ const form = {
     }
 };
 
+
+
 export const section = {
     cols: [
        sideBar,
-      { view: "resizer" },
-       dataTable,
-       form
+       { view: "resizer" },
+       {
+           view: "multiview",
+           cells: [
+               {
+                   id: "dashboard",
+                   cols: [
+                       dataTable,
+                       form
+                   ]
+                },
+                {
+                    id: "users",
+                    template: "Users"
+                },
+                {
+                    id: "products",
+                    template: "Products"
+                },
+                {
+                    id: "admin",
+                    template: "Admin"
+                }
+           ]
+    
+        } 
     ]
 }

@@ -8,10 +8,10 @@ export const small_film_set = [
   ];
 
 export const sideBar_data = [
-	{id:1 , value: "Dashboard"},
-	{id:2 , value: "Users"},
-	{id:3 , value: "Products"},
-	{id:4 , value: "Locations"},
+	{id: "dashboard" , value: "Dashboard"},
+	{id: "users" , value: "Users"},
+	{id: "products" , value: "Products"},
+	{id: "admin" , value: "Admin"},
 ]
 
 export const profile_menu = [
