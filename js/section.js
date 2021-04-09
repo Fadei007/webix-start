@@ -38,7 +38,7 @@ const dataTable = {
     id: "filmsTable",
     autoConfig: true,
     scroll: "y",
-    data: small_film_set
+    url: "./data/data.js"
 };
 
 
