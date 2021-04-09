@@ -40,11 +40,11 @@ const dataTable = {
     hover: "datatable-hover",
     leftSplit: 1,
     columns: [
-        { id:"rank", header: "", css: "rank-background", width: 50},
-        { id:"title", header: "Film title", fillspace: true},
-        { id:"year", header: "Released", width: 80},
-        { id:"votes", header: "Votes", width: 80},
-        { id:"rating", header: "Rating", width: 80}
+        { id:"rank", header: "", css: "rank-background", width: 50, sort: "int"},
+        { id:"title", header: ["Film title", {content:"textFilter"}], sort: "string", fillspace: true},
+        { id:"year", header: ["Released", {content:"textFilter"}], sort: "int", width: 80},
+        { id:"votes", header: ["Votes", {content:"textFilter"}], sort: "int", width: 80},
+        { id:"rating", header: ["Rating", {content:"textFilter"}], sort: "int", width: 80}
     ],
     url: "./data/data.js"
 };
