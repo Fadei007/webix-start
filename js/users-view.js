@@ -1,3 +1,5 @@
+import {randomInteger} from "./secondary-functions.js";
+
 const dataSortInterface= {
     cols:[
         {
@@ -39,11 +41,15 @@ function filterData(viewId, inputValue){
                    obj.country.toLowerCase().indexOf(inputValue) !== -1  ;
         })
 
-}
+};
 
 function sortData(sortingType){
     $$("ageChart").sort("age", sortingType);
     $$("usersList").sort("age", sortingType);
+};
+
+function highlitingItems(){
+    
 }
 
 
@@ -62,6 +68,14 @@ const usersList = {
               return false;
         }
     },
+    ready: function(){
+        const items = $$("usersList").$view.firstElementChild.children;
+
+        for(let i = 0; i < 5; i++){
+            items[i].style.backgroundColor = `rgb(${randomInteger(0,255)},${randomInteger(0,255)},${randomInteger(0,255)})`
+        }
+
+    },
     url: "../data/users.js"
 }
 
@@ -77,9 +91,6 @@ const ageChart = {
     },
     url: "../data/users.js",
 }
-
-
-
 
 
 export const users = {
