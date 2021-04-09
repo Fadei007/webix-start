@@ -1,4 +1,5 @@
 import {small_film_set, sideBar_data } from "../data/testdata.js";
+import {users} from "./users-view.js";
 
 const sideBar = {
     rows: [
@@ -17,7 +18,8 @@ const sideBar = {
             },
             ready: function(){
 
-               this.select("dashboard");
+               //this.select("dashboard");
+               this.select("users");
 
             }
 
@@ -165,7 +167,6 @@ const form = {
 };
 
 
-
 export const section = {
     cols: [
        sideBar,
@@ -182,7 +183,8 @@ export const section = {
                 },
                 {
                     id: "users",
-                    template: "Users"
+                    cols:[users]
+                    
                 },
                 {
                     id: "products",
