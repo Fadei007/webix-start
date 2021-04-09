@@ -36,9 +36,16 @@ const sideBar = {
 const dataTable = {
     view: "datatable",
     id: "filmsTable",
-    autoConfig: true,
     scroll: "y",
     hover: "datatable-hover",
+    leftSplit: 1,
+    columns: [
+        { id:"rank", header: "", css: "rank-background", width: 50},
+        { id:"title", header: "Film title", fillspace: true},
+        { id:"year", header: "Released", width: 80},
+        { id:"votes", header: "Votes", width: 80},
+        { id:"rating", header: "Rating", width: 80}
+    ],
     url: "./data/data.js"
 };
 
