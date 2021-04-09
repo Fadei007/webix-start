@@ -39,14 +39,23 @@ const dataTable = {
     scroll: "y",
     hover: "datatable-hover",
     leftSplit: 1,
+    
     columns: [
-        { id:"rank", header: "", css: "rank-background", width: 50, sort: "int"},
+        { id:"rank", header: "", css: "rank-background", css:"align-center", width: 50, sort: "int"},
         { id:"title", header: ["Film title", {content:"textFilter"}], sort: "string", fillspace: true},
-        { id:"year", header: ["Released", {content:"textFilter"}], sort: "int", width: 80},
-        { id:"votes", header: ["Votes", {content:"textFilter"}], sort: "int", width: 80},
-        { id:"rating", header: ["Rating", {content:"textFilter"}], sort: "int", width: 80}
+        { id:"year", header: [{text:"Released", css:"align-center"}, {content:"textFilter"}], css:"align-center", sort: "int", width: 80},
+        { id:"votes", header: [{text:"Votes", css:"align-center"},{content:"textFilter"}], css:"align-center", sort: "int", width: 80},
+        { id:"rating", header: [{text:"Raiting", css:"align-center"}, {content:"textFilter"}], css:"align-center",sort: "int", width: 80},
+        { id:"delete", header: "", template:"{common.trashIcon()}", width: 60}
+
     ],
-    url: "./data/data.js"
+    onClick: {
+        "wxi-trash":function(e, id){
+            this.remove(id);
+              return false;
+        }
+    },
+    url: "./data/data.js",
 };
 
 
