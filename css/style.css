@@ -24,3 +24,7 @@
 .section-font-size > .webix_template {
     font-size: 14px;
 }
+
+.datatable-hover{
+    background: rgb(0, 255, 0);
+}

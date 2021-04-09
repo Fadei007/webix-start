@@ -38,6 +38,7 @@ const dataTable = {
     id: "filmsTable",
     autoConfig: true,
     scroll: "y",
+    hover: "datatable-hover",
     url: "./data/data.js"
 };
 
