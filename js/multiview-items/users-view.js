@@ -1,4 +1,4 @@
-import {randomInteger} from "./secondary-functions.js";
+import {randomInteger} from "../secondary-functions.js";
 
 const dataSortInterface= {
     cols:[
@@ -52,10 +52,9 @@ function sortData(sortingType){
 const usersList = {
     view: "list",
     id: "usersList",
-    scroll: "y",
     template: `<div class="fl">
                     <span>#name# from #country#</span>
-                    <span class="webix_icon wxi-close icon-right"></span>
+                    <span class="webix_icon wxi-close"></span>
                 </div>`,
     onClick: {
         "wxi-close":function(e, id){
@@ -64,7 +63,7 @@ const usersList = {
             return false;
         }
     },
-    url: "../data/users.js",
+    url: "../../data/users.js",
     ready: function(){
 
         for(let i = 1; i < 6; i++){

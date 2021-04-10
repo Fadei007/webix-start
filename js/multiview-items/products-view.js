@@ -26,5 +26,5 @@ export const products = {
             this.openAll();
         }
     },
-    url: ("../data/products.js"),
+    url: ("../../data/products.js"),
 }
