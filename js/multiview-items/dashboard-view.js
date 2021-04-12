@@ -42,7 +42,12 @@ export const dataTable = {
     },
     scheme: {
         $init: function(el){
-            el.category = categories[randomInteger(0, categories.length - 1)].value
+            if(categories.length == 0 || !Array.isArray(categories)){
+                const defaultCategories = ["Crime", "Drama", "Comedy", "Fiction"]
+                el.category = defaultCategories[randomInteger(0,defaultCategories.length - 1)]
+            }else{
+                el.category = categories[randomInteger(0, categories.length - 1)].value
+            }
         }
     },
     ready: function(){
