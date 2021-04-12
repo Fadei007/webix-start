@@ -30,10 +30,9 @@ export const dataTable = {
                     if(formItemId == id.row){
                         filmForm.clear();
                     }
-        
-                    return false;
                 }
             )
+            return false;
         }
     },
     on:{
@@ -42,9 +41,8 @@ export const dataTable = {
             const id = this.getSelectedId();
             const item = this.getItem(id);
 
-            if(e.column != "delete"){
-                $$("filmForm").setValues(item);
-            }
+            $$("filmForm").setValues(item);
+            
   
         }
     },
