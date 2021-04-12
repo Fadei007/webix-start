@@ -24,3 +24,17 @@
 .section-font-size > .webix_template {
     font-size: 14px;
 }
+
+.datatable-hover{
+    background: #10c5ee;
+}
+
+.rank-background{
+    background-color: #F4F5F9;
+}
+
+.fl{
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
