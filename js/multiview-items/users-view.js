@@ -9,8 +9,6 @@ const dataSortInterface= {
                 onTimedKeyPress: function(){
                     const inputValue = this.getValue().toLowerCase();
                     filterData("usersList", inputValue);
-                   // filterData("ageChart", inputValue);
-
                 }
             }
         },
@@ -31,6 +29,25 @@ const dataSortInterface= {
             click: function(){
                 sortData("desc");
             }
+        },
+        {
+            view: "button", 
+            value: "Add new",
+            autowidth: true,
+            css: "webix_primary",
+            click: function(){
+                const usersList = $$("usersList");
+                const countries = ["USA", "Germany", "Canada", "Russia", "China", "France", "Italy", "Spain"];
+                const names = ["Sam Smith", "Alan Walker", "John Doe", "Mike Simpson", "David Jones"];
+                const id = usersList.count() + 1;
+
+                $$("usersList").add({
+                    "id": id, 
+                    "name": names[randomInteger(0, 4)], 
+                    "age": randomInteger(20, 60), 
+                    "country": countries[randomInteger(0, 7)]
+                })
+            }
         }
     ]
 }
@@ -44,7 +61,6 @@ function filterData(viewId, inputValue){
 };
 
 function sortData(sortingType){
-   // $$("ageChart").sort("age", sortingType);
     $$("usersList").sort("age", sortingType);
 };
 
