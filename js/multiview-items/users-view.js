@@ -74,13 +74,12 @@ const usersList = {
     url: "../../data/users.js",
     ready: function(){
 
-        for(let i = 1; i < 6; i++){
-            const randomBgColor = webix.html.createCss({
-                "background-color": `rgb(${randomInteger(254,255)},${randomInteger(0,255)},${randomInteger(0,255)})`
-            });
-            this.addCss(i, randomBgColor);
-        }
-
+    for (let i = 0; i < 5; i++){
+        const randomBgColor = webix.html.createCss({
+            "background-color": `rgb(${randomInteger(254,255)},${randomInteger(0,255)},${randomInteger(0,255)})`
+        });
+        this.addCss(this.getIdByIndex(i), randomBgColor);
+     }
     },
 
 }
