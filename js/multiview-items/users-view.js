@@ -72,16 +72,12 @@ const usersList = {
         }
     },
     url: "../../data/users.js",
-    ready: function(){
+    scheme:{
+        $init: function(el){
+            el.age < 26 ? el.$css = "user-background" : false ;
+        }
 
-    for (let i = 0; i < 5; i++){
-        const randomBgColor = webix.html.createCss({
-            "background-color": `rgb(${randomInteger(254,255)},${randomInteger(0,255)},${randomInteger(0,255)})`
-        });
-        this.addCss(this.getIdByIndex(i), randomBgColor);
-     }
-    },
-
+    }
 }
 
 
