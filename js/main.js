@@ -10,3 +10,4 @@ webix.ui({
     ]
 });
 
+$$("filmForm").bind($$("filmsTable"))

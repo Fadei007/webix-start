@@ -35,22 +35,11 @@ export const dataTable = {
             return false;
         }
     },
-    on:{
-        onAfterSelect: function(e){
-
-            const id = this.getSelectedId();
-            const item = this.getItem(id);
-
-            $$("filmForm").setValues(item);
-            
-  
-        }
-    },
     url: "../../data/data.js"
 }
 
 
-function addNewFilm(){
+function saveFilm(){
 
     const filmForm = $$("filmForm");
 
@@ -69,13 +58,13 @@ function addNewFilm(){
 
             if(filmsTable.exists(formItemId)){
 
-                filmsTable.updateItem(formItemId, formItem);
+                filmForm.save()
 
             }else{
                 //Adding rank for new film
                 formItem.rank = rank;
 
-                filmsTable.add(formItem);
+                filmForm.save(formItem);
                 
             };
 
@@ -93,9 +82,9 @@ function addNewFilm(){
         }
               
    }
-
-
 };
+
+
 
 function clearForm(){
     const formId = $$("filmForm");
@@ -117,7 +106,7 @@ const formButtons = {
             view: "button", 
             value: "Save",
             css: "webix_primary",
-            click: addNewFilm
+            click: saveFilm
             
         },
         { 
@@ -127,6 +116,7 @@ const formButtons = {
         },
     ]
 };
+
 
 export const form = {
     view: "form",
@@ -178,5 +168,5 @@ export const form = {
         votes: function(value){
             return value < 100000 && webix.rules.isNumber(value);
         }
-    }
+    },
 };
