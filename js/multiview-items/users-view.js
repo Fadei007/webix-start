@@ -115,7 +115,7 @@ const usersList = {
     },
     on: {
         onBeforeEditStop: function(state, editor, ignore){
-                            const value = editor.getValue()
+                            const value = editor.getValue();
                             const check = ( value != "" );
                             if (!ignore && !check || value.indexOf("<") != -1 || value.indexOf(">") != -1 || value.indexOf("/") != -1){
                                 webix.message({

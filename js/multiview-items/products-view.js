@@ -34,7 +34,7 @@ export const products = {
             this.openAll();
         },
         onBeforeEditStop: function(state, editor, ignore){
-            const value = editor.getValue()
+            const value = editor.getValue();
             const check = ( value != "" );
             if (!ignore && !check || value.indexOf("<") != -1 || value.indexOf(">") != -1 || value.indexOf("/") != -1){
                 webix.message({
@@ -54,7 +54,8 @@ export const products = {
             }
         },
         onBeforeEditStart: function(id){
-            if(Number.isInteger(Number(id.row)) && id.column == "price") return false
+            //Prevent editting cells that locate in 'price' column and have and have non-integers as id
+            if(Number.isInteger(Number(id.row)) && id.column == "price") return false;
         }
 
     },
