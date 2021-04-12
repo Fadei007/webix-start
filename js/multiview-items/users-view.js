@@ -58,9 +58,17 @@ const usersList = {
                 </div>`,
     onClick: {
         "wxi-close":function(e, id){
-            $$("ageChart").remove(id);
-            this.remove(id);
-            return false;
+            webix.confirm({
+                title: "User deleting",
+                text: "Do you really want to delete this user's information"
+            }).then(
+                function(){
+                    $$("ageChart").remove(id);
+                    $$("usersList").remove(id);
+                    return false;
+                }
+            )
+
         }
     },
     url: "../../data/users.js",
