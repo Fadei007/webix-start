@@ -47,29 +47,36 @@ function addNewFilm(){
         const rank = filmsTable.data.order.length + 1;
 
         
+        if(filmForm.isDirty()){
+            //Protection against XSS
+            formItem.title = webix.template.escape(formItem.title);
 
-        //Protection against XSS
-        formItem.title = webix.template.escape(formItem.title);
 
+            if(tableItems[formItemId]){
 
-        if(tableItems[formItemId]){
+                filmsTable.updateItem(formItemId, formItem);
 
-            filmsTable.updateItem(formItemId, formItem);
+            }else{
+                //Adding rank for new film
+                formItem.rank = rank;
 
+                filmsTable.add(formItem);
+                
+            };
+
+            webix.message({
+                text: "Validation is succsessful",
+                type: "success",
+                expire: 1000
+            });
         }else{
-            //Adding rank for new film
-            formItem.rank = rank;
-
-            filmsTable.add(formItem);
-            
-        };
-
-        webix.message({
-            text: "Validation is succsessful",
-            type: "success",
-            expire: 1000
-        });
-        
+            webix.message({
+                text: "You have not edited the data",
+                type: "info",
+                expire: 1000
+            });
+        }
+              
    }
 
 
