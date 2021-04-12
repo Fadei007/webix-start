@@ -9,5 +9,3 @@ webix.ui({
         footer
     ]
 });
-
-$$("filmForm").bind($$("filmsTable"))

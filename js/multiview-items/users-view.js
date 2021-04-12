@@ -101,20 +101,6 @@ const usersList = {
             el.age < 26 ? el.$css = "user-background" : false ;
         }
     },
-    rules:{
-        name: function(value){ 
-            if(value == ""){
-                webix.message({
-                    text:"Name couldn't be empty",
-                    type:"error", 
-                    expire: 1000,
-                });
-                return false;
-            }else{
-                return true;
-            }
-        }
-    },
     ready: function(){
         $$("ageChart").sync(this, function(){
             this.group({
@@ -126,7 +112,22 @@ const usersList = {
                 }
             });
         });
-        
+    },
+    on: {
+        onBeforeEditStop: function(state, editor, ignore){
+                            const value = editor.getValue()
+                            const check = ( value != "" );
+                            if (!ignore && !check || value.indexOf("<") != -1 || value.indexOf(">") != -1 || value.indexOf("/") != -1){
+                                webix.message({
+                                    text:"Name couldn't be empty or contain '<', '>', '/' symbols",
+                                    type:"error", 
+                                    expire: 2000,
+                                });
+                                
+                                return false;
+                            }
+                           
+                        }
     }
 }
 

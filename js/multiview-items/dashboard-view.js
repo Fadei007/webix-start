@@ -51,6 +51,7 @@ export const dataTable = {
         }
     },
     ready: function(){
+        $$("filmForm").bind($$("filmsTable"));
         this.registerFilter(
             $$("yearsFilter"),
             { 
@@ -227,5 +228,5 @@ export const form = {
         votes: function(value){
             return value < 100000 && webix.rules.isNumber(value);
         }
-    },
+    }
 };
