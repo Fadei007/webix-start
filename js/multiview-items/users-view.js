@@ -92,6 +92,9 @@ const ageChart = {
     type: "bar",
     barWidth: 30,
     value: "#age#",
+    tooltip: {
+        template: "#name#"
+    },
     xAxis: {
         title: "Age",
         template: "#age#"
