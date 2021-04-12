@@ -43,7 +43,7 @@ function addNewFilm(){
         const formItem = filmForm.getValues();
         const formItemId = formItem.id;
         const filmsTable = $$("filmsTable");
-        const tableItems = filmsTable.data.pull
+        const tableItems = filmsTable.data.pull;
         const rank = filmsTable.data.order.length + 1;
 
         
