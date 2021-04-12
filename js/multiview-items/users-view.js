@@ -9,7 +9,7 @@ const dataSortInterface= {
                 onTimedKeyPress: function(){
                     const inputValue = this.getValue().toLowerCase();
                     filterData("usersList", inputValue);
-                    filterData("ageChart", inputValue);
+                   // filterData("ageChart", inputValue);
 
                 }
             }
@@ -44,7 +44,7 @@ function filterData(viewId, inputValue){
 };
 
 function sortData(sortingType){
-    $$("ageChart").sort("age", sortingType);
+   // $$("ageChart").sort("age", sortingType);
     $$("usersList").sort("age", sortingType);
 };
 
@@ -68,7 +68,6 @@ const usersList = {
                 text: "Do you really want to delete this user's information"
             }).then(
                 function(){
-                    $$("ageChart").remove(id);
                     $$("usersList").remove(id);
                     return false;
                 }
@@ -77,6 +76,7 @@ const usersList = {
         }
     },
     editable: true,
+    editaction:"dblclick",
     editor: "text",
     editValue: "name",
     url: "../../data/users.js",
@@ -98,34 +98,63 @@ const usersList = {
                 return true;
             }
         }
+    },
+    ready: function(){
+        $$("ageChart").sync(this, function(){
+            this.group({
+                by: "country",
+                map:{
+                    country: ["country", "any"],
+                    amount: ["country", "count"],
+                    users: ["name", "names"]
+                }
+            });
+        });
+        
     }
 }
 
+webix.GroupMethods.names = function(prop, data){
+    if (!data.length) return 0;
+    let str = '';
+    for (let i = data.length - 1; i >= 0; i--) {
+        if(i == 0){
+            str += prop(data[i])
+        }else{
+            str += prop(data[i]) + ", ";
+        }
+      };
+    return str;
+};
 
 const ageChart = {
     view: "chart",
     id: "ageChart",
     type: "bar",
     barWidth: 30,
-    value: "#age#",
+    value: "#amount#",
     tooltip: {
-        template: "#name#"
+        template: "#users#"
+    },
+    yAxis:{
+      start: 0,
+      step: 2,
+      end: 10
     },
     xAxis: {
-        title: "Age",
-        template: "#age#"
-    },
-    url: "../data/users.js",
+        title: "Country",
+        template: "#country#"
+    }
 }
 
 
 export const users = {
-        id: "usersView",
-        rows:[
-            dataSortInterface,
-            usersList,
-            ageChart
-        ]      
+    id: "usersView",
+    rows:[
+        dataSortInterface,
+        usersList,
+        ageChart
+    ]      
 }
 
 
