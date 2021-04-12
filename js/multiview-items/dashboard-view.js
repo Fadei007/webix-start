@@ -1,3 +1,6 @@
+import {categories} from "../../data/categories.js";
+import {randomInteger} from "../secondary-functions.js";
+
 export const dataTable = {
     view: "datatable",
     id: "filmsTable",
@@ -7,8 +10,9 @@ export const dataTable = {
     leftSplit: 1,
     
     columns: [
-        { id:"rank", header: "", css: "rank-background align-center", width: 50, sort: "int"},
+        { id:"rank", header: {text:"#", css:"align-center"}, css: "rank-background align-center", width: 50, sort: "int"},
         { id:"title", header: ["Film title", {content:"textFilter"}], sort: "string", fillspace: true},
+        { id:"category", header: [{text:"Category", css:"align-center"}, {content:"textFilter"}], sort: "string", width: 100},
         { id:"year", header: [{text:"Released", css:"align-center"}, {content:"textFilter"}], css:"align-center", sort: "int", width: 80},
         { id:"votes", header: [{text:"Votes", css:"align-center"},{content:"textFilter"}], css:"align-center", sort: "int", width: 80},
         { id:"rating", header: [{text:"Raiting", css:"align-center"}, {content:"textFilter"}], css:"align-center",sort: "int", width: 80},
@@ -35,7 +39,12 @@ export const dataTable = {
             return false;
         }
     },
-    url: "../../data/data.js"
+    scheme: {
+        $init: function(el){
+            el.category = categories[randomInteger(0, categories.length - 1)].value
+        }
+    },
+    url: "../../data/data.js",
 }
 
 
