@@ -17,8 +17,16 @@ export const dataTable = {
     ],
     onClick: {
         "wxi-trash":function(e, id){
-            this.remove(id);
-              return false;
+            webix.confirm({
+                title: "Film deleting",
+                text: "Do you really want to delete this film's information"
+            }).then(
+                function(){
+                    $$("filmsTable").remove(id);
+                    $$("filmForm").clear();
+                    return false;
+                }
+            )
         }
     },
     on:{
@@ -43,7 +51,6 @@ function addNewFilm(){
         const formItem = filmForm.getValues();
         const formItemId = formItem.id;
         const filmsTable = $$("filmsTable");
-        const tableItems = filmsTable.data.pull;
         const rank = filmsTable.data.order.length + 1;
 
         
@@ -52,7 +59,7 @@ function addNewFilm(){
             formItem.title = webix.template.escape(formItem.title);
 
 
-            if(tableItems[formItemId]){
+            if(filmsTable.exists(formItemId)){
 
                 filmsTable.updateItem(formItemId, formItem);
 
