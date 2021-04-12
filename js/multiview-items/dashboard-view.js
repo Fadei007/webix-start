@@ -100,7 +100,7 @@ const formButtons = {
     cols:[
         { 
             view: "button", 
-            value: "Add new",
+            value: "Save",
             css: "webix_primary",
             click: addNewFilm
             
