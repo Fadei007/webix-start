@@ -76,7 +76,7 @@ const usersList = {
 
         for(let i = 1; i < 6; i++){
             const randomBgColor = webix.html.createCss({
-                "background-color": `rgb(${randomInteger(0,255)},${randomInteger(0,255)},${randomInteger(0,255)})`
+                "background-color": `rgb(${randomInteger(254,255)},${randomInteger(0,255)},${randomInteger(0,255)})`
             });
             this.addCss(i, randomBgColor);
         }
