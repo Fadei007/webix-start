@@ -48,9 +48,14 @@ function sortData(sortingType){
     $$("usersList").sort("age", sortingType);
 };
 
+webix.protoUI({
+    name:"editList"
+}, webix.EditAbility, webix.ui.list);
+
+
 
 const usersList = {
-    view: "list",
+    view: "editList",
     id: "usersList",
     template: `<div class="fl">
                     <span>#name# from #country#</span>
@@ -71,12 +76,28 @@ const usersList = {
 
         }
     },
+    editable: true,
+    editor: "text",
+    editValue: "name",
     url: "../../data/users.js",
     scheme:{
         $init: function(el){
             el.age < 26 ? el.$css = "user-background" : false ;
         }
-
+    },
+    rules:{
+        name: function(value){ 
+            if(value == ""){
+                webix.message({
+                    text:"Name couldn't be empty",
+                    type:"error", 
+                    expire: 1000,
+                });
+                return false;
+            }else{
+                return true;
+            }
+        }
     }
 }
 
