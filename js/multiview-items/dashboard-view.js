@@ -22,19 +22,29 @@ export const dataTable = {
                 text: "Do you really want to delete this film's information"
             }).then(
                 function(){
+                    const filmForm = $$("filmForm");
+                    const formItemId = filmForm.getValues().id;
+        
                     $$("filmsTable").remove(id);
-                    $$("filmForm").clear();
+
+                    if(formItemId == id.row){
+                        filmForm.clear();
+                    }
+        
                     return false;
                 }
             )
         }
     },
     on:{
-        onAfterSelect: function(){
+        onAfterSelect: function(e){
+
             const id = this.getSelectedId();
             const item = this.getItem(id);
-            
-            $$("filmForm").setValues(item);
+
+            if(e.column != "delete"){
+                $$("filmForm").setValues(item);
+            }
   
         }
     },
@@ -51,7 +61,7 @@ function addNewFilm(){
         const formItem = filmForm.getValues();
         const formItemId = formItem.id;
         const filmsTable = $$("filmsTable");
-        const rank = filmsTable.data.order.length + 1;
+        const rank = filmsTable.count() + 1;
 
         
         if(filmForm.isDirty()){
