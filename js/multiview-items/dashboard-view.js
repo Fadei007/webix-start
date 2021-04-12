@@ -114,6 +114,13 @@ const formButtons = {
             value: "Clear",
             click: clearForm
         },
+        { 
+            view: "button", 
+            value: "Unselect",
+            click: function(){
+                $$("filmsTable").unselectAll();
+            }
+        },
     ]
 };
 
