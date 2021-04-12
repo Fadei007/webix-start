@@ -1,7 +1,7 @@
 import {sideBar_data } from "../data/testdata.js";
 import {users} from "./multiview-items/users-view.js";
 import {products} from "./multiview-items/products-view.js";
-import {dataTable,form} from "./multiview-items/dashboard-view.js";
+import {dataTable,filmsFilter ,form} from "./multiview-items/dashboard-view.js";
 
 const sideBar = {
     rows: [
@@ -46,7 +46,12 @@ export const section = {
                {
                    id: "dashboard",
                    cols: [
-                       dataTable,
+                       {
+                           rows:[
+                               filmsFilter,
+                               dataTable,
+                           ]
+                       },    
                        form
                    ]
                 },

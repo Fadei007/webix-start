@@ -13,10 +13,11 @@ export const dataTable = {
         { id:"rank", header: {text:"#", css:"align-center"}, css: "rank-background align-center", width: 50, sort: "int"},
         { id:"title", header: ["Film title", {content:"textFilter"}], sort: "string", fillspace: true},
         { id:"category", header: [{text:"Category", css:"align-center"}, {content:"textFilter"}], sort: "string", width: 100},
-        { id:"year", header: [{text:"Released", css:"align-center"}, {content:"textFilter"}], css:"align-center", sort: "int", width: 80},
         { id:"votes", header: [{text:"Votes", css:"align-center"},{content:"textFilter"}], css:"align-center", sort: "int", width: 80},
         { id:"rating", header: [{text:"Raiting", css:"align-center"}, {content:"textFilter"}], css:"align-center",sort: "int", width: 80},
+        { id:"year", header: [{text:"Released", css:"align-center"}], css:"align-center", sort: "int", width: 80},
         { id:"delete", header: "", template:"{common.trashIcon()}", width: 60}
+        
 
     ],
     onClick: {
@@ -43,6 +44,27 @@ export const dataTable = {
         $init: function(el){
             el.category = categories[randomInteger(0, categories.length - 1)].value
         }
+    },
+    ready: function(){
+        this.registerFilter(
+            $$("yearsFilter"),
+            { 
+                columnId:"year", compare:function(value, filter, item){
+                    if(filter == 1)  return value;
+                    if(filter == 2)  return value < 2000;
+                    if(filter == 3)  return value > 2000 && value < new Date().getFullYear();
+                    if(filter == 4)  return value == new Date().getFullYear();
+                }
+            },
+            { 
+                getValue:function(node){
+                    return node.getValue();
+                },
+                setValue:function(node, value){
+                    node.setValue(value);
+                }
+            }
+        )
     },
     url: "../../data/data.js",
 }
@@ -132,6 +154,22 @@ const formButtons = {
         },
     ]
 };
+
+export const filmsFilter = {
+    view: "tabbar",
+    id: "yearsFilter",
+    options:[
+        {id:1, value:"All", css: "custom-btn"},
+        {id:2, value:"Old"},
+        {id:3, value:"Modern"},
+        {id:4, value:"New"}
+      ],
+      on:{
+        onChange:function(){
+            $$("filmsTable").filterByAll();
+          }
+      }
+}
 
 
 export const form = {
