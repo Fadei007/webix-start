@@ -116,8 +116,9 @@ const usersList = {
     on: {
         onBeforeEditStop: function(state, editor, ignore){
                             const value = editor.getValue();
+                            const regexp = /[<>\/]/;
                             const check = ( value != "" );
-                            if (!ignore && !check || value.indexOf("<") != -1 || value.indexOf(">") != -1 || value.indexOf("/") != -1){
+                            if (!ignore && !check || value.match(regexp) != null){
                                 webix.message({
                                     text:"Name couldn't be empty or contain '<', '>', '/' symbols",
                                     type:"error", 
