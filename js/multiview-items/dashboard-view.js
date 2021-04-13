@@ -12,7 +12,7 @@ export const dataTable = {
     columns: [
         { id:"rank", header: {text:"#", css:"align-center"}, css: "rank-background align-center", width: 50, sort: "int"},
         { id:"title", header: ["Film title", {content:"textFilter"}], sort: "string", fillspace: true},
-        { id:"category", header: [{text:"Category", css:"align-center"}, {content:"textFilter"}], sort: "string", width: 100},
+        { id:"category", header: [{text:"Category", css:"align-center"}, {content:"selectFilter"}], sort: "string", width: 100},
         { id:"votes", header: [{text:"Votes", css:"align-center"},{content:"textFilter"}], css:"align-center", sort: "int", width: 80},
         { id:"rating", header: [{text:"Raiting", css:"align-center"}, {content:"textFilter"}], css:"align-center",sort: "int", width: 80},
         { id:"year", header: [{text:"Released", css:"align-center"}], css:"align-center", sort: "int", width: 80},
