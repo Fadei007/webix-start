@@ -1,3 +1,6 @@
+import {categories} from "../../data/categories.js";
+import {randomInteger} from "../secondary-functions.js";
+
 export const dataTable = {
     view: "datatable",
     id: "filmsTable",
@@ -7,12 +10,14 @@ export const dataTable = {
     leftSplit: 1,
     
     columns: [
-        { id:"rank", header: "", css: "rank-background align-center", width: 50, sort: "int"},
+        { id:"rank", header: {text:"#", css:"align-center"}, css: "rank-background align-center", width: 50, sort: "int"},
         { id:"title", header: ["Film title", {content:"textFilter"}], sort: "string", fillspace: true},
-        { id:"year", header: [{text:"Released", css:"align-center"}, {content:"textFilter"}], css:"align-center", sort: "int", width: 80},
+        { id:"category", header: [{text:"Category", css:"align-center"}, {content:"selectFilter"}], sort: "string", width: 100},
         { id:"votes", header: [{text:"Votes", css:"align-center"},{content:"textFilter"}], css:"align-center", sort: "int", width: 80},
         { id:"rating", header: [{text:"Raiting", css:"align-center"}, {content:"textFilter"}], css:"align-center",sort: "int", width: 80},
+        { id:"year", header: [{text:"Released", css:"align-center"}], css:"align-center", sort: "int", width: 80},
         { id:"delete", header: "", template:"{common.trashIcon()}", width: 60}
+        
 
     ],
     onClick: {
@@ -35,22 +40,46 @@ export const dataTable = {
             return false;
         }
     },
-    on:{
-        onAfterSelect: function(e){
-
-            const id = this.getSelectedId();
-            const item = this.getItem(id);
-
-            $$("filmForm").setValues(item);
-            
-  
+    scheme: {
+        $init: function(el){
+            if(categories.length == 0 || !Array.isArray(categories)){
+                const defaultCategories = ["Crime", "Drama", "Comedy", "Fiction"];
+                el.category = defaultCategories[randomInteger(0,defaultCategories.length - 1)];
+            }else{
+                el.category = categories[randomInteger(0, categories.length - 1)].value;
+            }
         }
     },
-    url: "../../data/data.js"
+    ready: function(){
+        $$("filmForm").bind($$("filmsTable"));
+        this.registerFilter(
+            $$("yearsFilter"),
+            { 
+                columnId:"year", compare:function(value, filter, item){
+                    switch(filter){
+                        case "1": return value; break;
+                        case "2": return value < 2000; break;
+                        case "3": return value > 2000 && value < new Date().getFullYear(); break;
+                        case "4": return value == new Date().getFullYear(); break;
+                        default: return value; break;
+                    } 
+                }
+            },
+            { 
+                getValue:function(node){
+                    return node.getValue();
+                },
+                setValue:function(node, value){
+                    node.setValue(value);
+                }
+            }
+        )
+    },
+    url: "../../data/data.js",
 }
 
 
-function addNewFilm(){
+function saveFilm(){
 
     const filmForm = $$("filmForm");
 
@@ -69,13 +98,13 @@ function addNewFilm(){
 
             if(filmsTable.exists(formItemId)){
 
-                filmsTable.updateItem(formItemId, formItem);
+                filmForm.save();
 
             }else{
                 //Adding rank for new film
                 formItem.rank = rank;
 
-                filmsTable.add(formItem);
+                filmForm.save(formItem);
                 
             };
 
@@ -93,9 +122,9 @@ function addNewFilm(){
         }
               
    }
-
-
 };
+
+
 
 function clearForm(){
     const formId = $$("filmForm");
@@ -117,7 +146,7 @@ const formButtons = {
             view: "button", 
             value: "Save",
             css: "webix_primary",
-            click: addNewFilm
+            click: saveFilm
             
         },
         { 
@@ -125,8 +154,32 @@ const formButtons = {
             value: "Clear",
             click: clearForm
         },
+        { 
+            view: "button", 
+            value: "Unselect",
+            click: function(){
+                $$("filmsTable").unselectAll();
+            }
+        },
     ]
 };
+
+export const filmsFilter = {
+    view: "tabbar",
+    id: "yearsFilter",
+    options:[
+        {id:1, value:"All"},
+        {id:2, value:"Old"},
+        {id:3, value:"Modern"},
+        {id:4, value:"New"}
+      ],
+      on:{
+        onChange:function(){
+            $$("filmsTable").filterByAll();
+          }
+      }
+}
+
 
 export const form = {
     view: "form",

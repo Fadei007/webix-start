@@ -1,4 +1,5 @@
 import {randomInteger} from "../secondary-functions.js";
+import {editList, names} from "../mixins/mixins.js";
 
 const dataSortInterface= {
     cols:[
@@ -9,8 +10,6 @@ const dataSortInterface= {
                 onTimedKeyPress: function(){
                     const inputValue = this.getValue().toLowerCase();
                     filterData("usersList", inputValue);
-                    filterData("ageChart", inputValue);
-
                 }
             }
         },
@@ -31,6 +30,25 @@ const dataSortInterface= {
             click: function(){
                 sortData("desc");
             }
+        },
+        {
+            view: "button", 
+            value: "Add new",
+            autowidth: true,
+            css: "webix_primary",
+            click: function(){
+                const usersList = $$("usersList");
+                const countries = ["USA", "Germany", "Canada", "Russia", "China", "France", "Italy", "Spain"];
+                const names = ["Sam Smith", "Alan Walker", "John Doe", "Mike Simpson", "David Jones"];
+                const id = usersList.count() + 1;
+
+                $$("usersList").add({
+                    "id": id, 
+                    "name": names[randomInteger(0, 4)], 
+                    "age": randomInteger(20, 60), 
+                    "country": countries[randomInteger(0, 7)]
+                })
+            }
         }
     ]
 }
@@ -44,13 +62,11 @@ function filterData(viewId, inputValue){
 };
 
 function sortData(sortingType){
-    $$("ageChart").sort("age", sortingType);
     $$("usersList").sort("age", sortingType);
 };
 
-
 const usersList = {
-    view: "list",
+    view: "editList",
     id: "usersList",
     template: `<div class="fl">
                     <span>#name# from #country#</span>
@@ -63,7 +79,6 @@ const usersList = {
                 text: "Do you really want to delete this user's information"
             }).then(
                 function(){
-                    $$("ageChart").remove(id);
                     $$("usersList").remove(id);
                     return false;
                 }
@@ -71,18 +86,45 @@ const usersList = {
 
         }
     },
+    editable: true,
+    editaction:"dblclick",
+    editor: "text",
+    editValue: "name",
     url: "../../data/users.js",
-    ready: function(){
-
-        for(let i = 1; i < 6; i++){
-            const randomBgColor = webix.html.createCss({
-                "background-color": `rgb(${randomInteger(254,255)},${randomInteger(0,255)},${randomInteger(0,255)})`
-            });
-            this.addCss(i, randomBgColor);
+    scheme:{
+        $init: function(el){
+           el.$css = el.age < 26 ? "user-background" : "" ;
         }
-
     },
-
+    ready: function(){
+        $$("ageChart").sync(this, function(){
+            this.group({
+                by: "country",
+                map:{
+                    country: ["country", "any"],
+                    amount: ["country", "count"],
+                    users: ["name", "names"]
+                }
+            });
+        });
+    },
+    on: {
+        onBeforeEditStop: function(state, editor, ignore){
+                            const value = editor.getValue();
+                            const regexp = /[<>\/]/;
+                            const check = ( value != "" );
+                            if (!ignore && !check || value.match(regexp) != null){
+                                webix.message({
+                                    text:"Name couldn't be empty or contain '<', '>', '/' symbols",
+                                    type:"error", 
+                                    expire: 2000,
+                                });
+                                
+                                return false;
+                            }
+                           
+                        }
+    }
 }
 
 
@@ -91,25 +133,29 @@ const ageChart = {
     id: "ageChart",
     type: "bar",
     barWidth: 30,
-    value: "#age#",
+    value: "#amount#",
     tooltip: {
-        template: "#name#"
+        template: "#users#"
+    },
+    yAxis:{
+      start: 0,
+      step: 2,
+      end: 10
     },
     xAxis: {
-        title: "Age",
-        template: "#age#"
-    },
-    url: "../data/users.js",
+        title: "Country",
+        template: "#country#"
+    }
 }
 
 
 export const users = {
-        id: "usersView",
-        rows:[
-            dataSortInterface,
-            usersList,
-            ageChart
-        ]      
+    id: "usersView",
+    rows:[
+        dataSortInterface,
+        usersList,
+        ageChart
+    ]      
 }
 
 

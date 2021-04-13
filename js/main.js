@@ -9,4 +9,3 @@ webix.ui({
         footer
     ]
 });
-
