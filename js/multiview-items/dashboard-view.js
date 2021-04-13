@@ -1,4 +1,3 @@
-import {categories} from "../../data/categories.js";
 import {randomInteger} from "../secondary-functions.js";
 
 export const dataTable = {
