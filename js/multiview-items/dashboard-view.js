@@ -1,4 +1,5 @@
 import {randomInteger} from "../secondary-functions.js";
+import {categories} from "../data-collections/collections.js";
 
 export const dataTable = {
     view: "datatable",
@@ -11,7 +12,7 @@ export const dataTable = {
     columns: [
         { id:"rank", header: {text:"#", css:"align-center"}, css: "rank-background align-center", width: 50, sort: "int"},
         { id:"title", header: ["Film title", {content:"textFilter"}], sort: "string", fillspace: true},
-        { id:"category", header: [{text:"Category", css:"align-center"}, {content:"selectFilter"}], sort: "string", width: 100},
+        { id:"category", header: [{text:"Category", css:"align-center"}, {content:"selectFilter"}], collection: categories, sort: "string", width: 100},
         { id:"votes", header: [{text:"Votes", css:"align-center"},{content:"textFilter"}], css:"align-center", sort: "int", width: 80},
         { id:"rating", header: [{text:"Raiting", css:"align-center"}, {content:"textFilter"}], css:"align-center",sort: "int", width: 80},
         { id:"year", header: [{text:"Released", css:"align-center"}], css:"align-center", sort: "int", width: 80},
@@ -41,12 +42,7 @@ export const dataTable = {
     },
     scheme: {
         $init: function(el){
-            if(categories.length == 0 || !Array.isArray(categories)){
-                const defaultCategories = ["Crime", "Drama", "Comedy", "Fiction"];
-                el.category = defaultCategories[randomInteger(0,defaultCategories.length - 1)];
-            }else{
-                el.category = categories[randomInteger(0, categories.length - 1)].value;
-            }
+            el.category = randomInteger(1, categories.count());
         }
     },
     ready: function(){
