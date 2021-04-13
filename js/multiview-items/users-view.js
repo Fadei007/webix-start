@@ -93,7 +93,7 @@ const usersList = {
     url: "../../data/users.js",
     scheme:{
         $init: function(el){
-            el.age < 26 ? el.$css = "user-background" : false ;
+           el.$css = el.age < 26 ? "user-background" : "" ;
         }
     },
     ready: function(){

@@ -50,9 +50,9 @@ export const products = {
                 return false;
             }
         },
-        onBeforeEditStart: function(id){
+        onBeforeEditStart: function(id, obj){
             //Prevent editting cells that locate in 'price' column and have and have non-integers as id
-            if(Number.isInteger(Number(id.row)) && id.column == "price") return false;
+            if(this.getItem(id).$level == 1 && id.column == "price") return false;
         }
 
     },
