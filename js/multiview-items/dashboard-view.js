@@ -44,9 +44,9 @@ export const dataTable = {
         $init: function(el){
             if(categories.length == 0 || !Array.isArray(categories)){
                 const defaultCategories = ["Crime", "Drama", "Comedy", "Fiction"];
-                el.category = defaultCategories[randomInteger(0,defaultCategories.length - 1)]
+                el.category = defaultCategories[randomInteger(0,defaultCategories.length - 1)];
             }else{
-                el.category = categories[randomInteger(0, categories.length - 1)].value
+                el.category = categories[randomInteger(0, categories.length - 1)].value;
             }
         }
     },
@@ -98,7 +98,7 @@ function saveFilm(){
 
             if(filmsTable.exists(formItemId)){
 
-                filmForm.save()
+                filmForm.save();
 
             }else{
                 //Adding rank for new film

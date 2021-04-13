@@ -1,5 +1,5 @@
 import {randomInteger} from "../secondary-functions.js";
-import {editList, names} from "../mixins/mixins.js"
+import {editList, names} from "../mixins/mixins.js";
 
 const dataSortInterface= {
     cols:[
