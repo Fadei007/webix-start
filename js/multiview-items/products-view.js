@@ -1,9 +1,5 @@
-webix.protoUI({
-    name:"editTreeTable"
-}, webix.EditAbility, webix.ui.treetable);
-
 export const products = {
-    view: "editTreeTable",
+    view: "treetable",
     columns:[
         {
             id: "id",
@@ -36,7 +32,6 @@ export const products = {
         onBeforeEditStop: function(state, editor, ignore){
             const value = editor.getValue();
             const regexp = /[<>\/]/;
-            console.log(value.match(regexp))
             const check = ( value != "" );
             if (!ignore && !check || value.match(regexp) != null){
                 webix.message({
