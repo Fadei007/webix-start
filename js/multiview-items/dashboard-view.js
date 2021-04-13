@@ -43,7 +43,7 @@ export const dataTable = {
     scheme: {
         $init: function(el){
             if(categories.length == 0 || !Array.isArray(categories)){
-                const defaultCategories = ["Crime", "Drama", "Comedy", "Fiction"]
+                const defaultCategories = ["Crime", "Drama", "Comedy", "Fiction"];
                 el.category = defaultCategories[randomInteger(0,defaultCategories.length - 1)]
             }else{
                 el.category = categories[randomInteger(0, categories.length - 1)].value
@@ -56,10 +56,13 @@ export const dataTable = {
             $$("yearsFilter"),
             { 
                 columnId:"year", compare:function(value, filter, item){
-                    if(filter == 1)  return value;
-                    if(filter == 2)  return value < 2000;
-                    if(filter == 3)  return value > 2000 && value < new Date().getFullYear();
-                    if(filter == 4)  return value == new Date().getFullYear();
+                    switch(filter){
+                        case "1": return value; break;
+                        case "2": return value < 2000; break;
+                        case "3": return value > 2000 && value < new Date().getFullYear(); break;
+                        case "4": return value == new Date().getFullYear(); break;
+                        default: return value; break;
+                    } 
                 }
             },
             { 
@@ -165,7 +168,7 @@ export const filmsFilter = {
     view: "tabbar",
     id: "yearsFilter",
     options:[
-        {id:1, value:"All", css: "custom-btn"},
+        {id:1, value:"All"},
         {id:2, value:"Old"},
         {id:3, value:"Modern"},
         {id:4, value:"New"}
