@@ -212,6 +212,14 @@ export const form = {
             name: "votes",
             invalidMessage: "Votes must be less than 100000"
         },
+        { 
+            view:"richselect",
+            label:"Category",
+            name: "category", 
+            options:{
+                data: categories
+            }
+        },
         formButtons,
         {}
     ],
