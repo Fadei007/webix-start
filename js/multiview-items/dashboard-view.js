@@ -104,8 +104,6 @@ function saveFilm(){
                 
             };
 
-            filmsTable.unselect(formItemId);
-
             webix.message({
                 text: "Validation is succsessful",
                 type: "success",
@@ -125,14 +123,17 @@ function saveFilm(){
 
 
 function clearForm(){
-    const formId = $$("filmForm");
+    const filmForm = $$("filmForm");
+    const formItem = filmForm.getValues();
+    const formItemId = formItem.id;
     webix.confirm({
         title: "Form cleaning",
         text: "Do you realy want to clean up the form?"
     }).then(
         function(){
-            formId.clear();
-            formId.clearValidation();
+            $$("filmsTable").unselect(formItemId);
+            filmForm.clear();
+            filmForm.clearValidation();
         }
     )
 };

@@ -40,11 +40,3 @@ webix.ui({
 
 syncCategoriesDataCollection();
 syncUsersDataCollection();
-
-
-
-
-
-
-
-

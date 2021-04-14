@@ -82,8 +82,6 @@ function saveCategory(){
                 categories.add(formItem);      
             };
 
-            categoriesTable.unselect(formItemId);
-
             webix.message({
                 text: "Validation is succsessful",
                 type: "success",
@@ -101,11 +99,14 @@ function saveCategory(){
 
 function clearForm(){
     const categoryForm = $$("categoryForm");
+    const formItem = categoryForm.getValues();
+    const formItemId = formItem.id;
     webix.confirm({
         title: "Form cleaning",
         text: "Do you realy want to clean up the form?"
     }).then(
         function(){
+            $$("categoriesTable").unselect(formItemId);
             categoryForm.clear();
             categoryForm.clearValidation();
         }
