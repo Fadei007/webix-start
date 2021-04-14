@@ -1,5 +1,5 @@
-import {categories} from "../../data/categories.js";
 import {randomInteger} from "../secondary-functions.js";
+import {categories} from "../data-collections/collections.js";
 
 export const dataTable = {
     view: "datatable",
@@ -12,7 +12,7 @@ export const dataTable = {
     columns: [
         { id:"rank", header: {text:"#", css:"align-center"}, css: "rank-background align-center", width: 50, sort: "int"},
         { id:"title", header: ["Film title", {content:"textFilter"}], sort: "string", fillspace: true},
-        { id:"category", header: [{text:"Category", css:"align-center"}, {content:"selectFilter"}], sort: "string", width: 100},
+        { id:"category", header: [{text:"Category", css:"align-center"}, {content:"selectFilter"}], collection: categories, sort: "string", width: 100},
         { id:"votes", header: [{text:"Votes", css:"align-center"},{content:"textFilter"}], css:"align-center", sort: "int", width: 80},
         { id:"rating", header: [{text:"Raiting", css:"align-center"}, {content:"textFilter"}], css:"align-center",sort: "int", width: 80},
         { id:"year", header: [{text:"Released", css:"align-center"}], css:"align-center", sort: "int", width: 80},
@@ -40,17 +40,13 @@ export const dataTable = {
             return false;
         }
     },
-    scheme: {
+    scheme:{
         $init: function(el){
-            if(categories.length == 0 || !Array.isArray(categories)){
-                const defaultCategories = ["Crime", "Drama", "Comedy", "Fiction"];
-                el.category = defaultCategories[randomInteger(0,defaultCategories.length - 1)];
-            }else{
-                el.category = categories[randomInteger(0, categories.length - 1)].value;
-            }
+            if (!el.category) el.category = randomInteger(1, categories.count())
         }
     },
     ready: function(){
+
         $$("filmForm").bind($$("filmsTable"));
         this.registerFilter(
             $$("yearsFilter"),
@@ -95,7 +91,6 @@ function saveFilm(){
             //Protection against XSS
             formItem.title = webix.template.escape(formItem.title);
 
-
             if(filmsTable.exists(formItemId)){
 
                 filmForm.save();
@@ -105,6 +100,7 @@ function saveFilm(){
                 formItem.rank = rank;
 
                 filmForm.save(formItem);
+
                 
             };
 
@@ -127,14 +123,17 @@ function saveFilm(){
 
 
 function clearForm(){
-    const formId = $$("filmForm");
+    const filmForm = $$("filmForm");
+    const formItem = filmForm.getValues();
+    const formItemId = formItem.id;
     webix.confirm({
         title: "Form cleaning",
         text: "Do you realy want to clean up the form?"
     }).then(
         function(){
-            formId.clear();
-            formId.clearValidation();
+            $$("filmsTable").unselect(formItemId);
+            filmForm.clear();
+            filmForm.clearValidation();
         }
     )
 };
@@ -216,6 +215,14 @@ export const form = {
             label: "Votes",
             name: "votes",
             invalidMessage: "Votes must be less than 100000"
+        },
+        { 
+            view:"richselect",
+            label:"Category",
+            name: "category", 
+            options:{
+                data: categories
+            }
         },
         formButtons,
         {}

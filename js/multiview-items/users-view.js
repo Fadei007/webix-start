@@ -1,5 +1,6 @@
 import {randomInteger} from "../secondary-functions.js";
 import {editList, names} from "../mixins/mixins.js";
+import {users_data} from "../data-collections/collections.js";
 
 const dataSortInterface= {
     cols:[
@@ -9,7 +10,7 @@ const dataSortInterface= {
             on: {
                 onTimedKeyPress: function(){
                     const inputValue = this.getValue().toLowerCase();
-                    filterData("usersList", inputValue);
+                    filterData(inputValue);
                 }
             }
         },
@@ -40,10 +41,8 @@ const dataSortInterface= {
                 const usersList = $$("usersList");
                 const countries = ["USA", "Germany", "Canada", "Russia", "China", "France", "Italy", "Spain"];
                 const names = ["Sam Smith", "Alan Walker", "John Doe", "Mike Simpson", "David Jones"];
-                const id = usersList.count() + 1;
-
-                $$("usersList").add({
-                    "id": id, 
+                
+                users_data.add({
                     "name": names[randomInteger(0, 4)], 
                     "age": randomInteger(20, 60), 
                     "country": countries[randomInteger(0, 7)]
@@ -53,8 +52,8 @@ const dataSortInterface= {
     ]
 }
 
-function filterData(viewId, inputValue){
-    $$(viewId).filter(function(obj){
+function filterData(inputValue){
+    users_data.filter(function(obj){
             return obj.name.toLowerCase().indexOf(inputValue) !== -1     ||
                    obj.country.toLowerCase().indexOf(inputValue) !== -1  ;
         })
@@ -62,7 +61,7 @@ function filterData(viewId, inputValue){
 };
 
 function sortData(sortingType){
-    $$("usersList").sort("age", sortingType);
+    users_data.sort("age", sortingType);
 };
 
 const usersList = {
@@ -79,7 +78,7 @@ const usersList = {
                 text: "Do you really want to delete this user's information"
             }).then(
                 function(){
-                    $$("usersList").remove(id);
+                    users_data.remove(id);
                     return false;
                 }
             )
@@ -90,24 +89,6 @@ const usersList = {
     editaction:"dblclick",
     editor: "text",
     editValue: "name",
-    url: "../../data/users.js",
-    scheme:{
-        $init: function(el){
-           el.$css = el.age < 26 ? "user-background" : "" ;
-        }
-    },
-    ready: function(){
-        $$("ageChart").sync(this, function(){
-            this.group({
-                by: "country",
-                map:{
-                    country: ["country", "any"],
-                    amount: ["country", "count"],
-                    users: ["name", "names"]
-                }
-            });
-        });
-    },
     on: {
         onBeforeEditStop: function(state, editor, ignore){
                             const value = editor.getValue();
