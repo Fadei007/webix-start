@@ -90,7 +90,6 @@ function saveFilm(){
             //Protection against XSS
             formItem.title = webix.template.escape(formItem.title);
 
-
             if(filmsTable.exists(formItemId)){
 
                 filmForm.save();
@@ -103,6 +102,8 @@ function saveFilm(){
 
                 
             };
+
+            filmsTable.unselect(formItemId);
 
             webix.message({
                 text: "Validation is succsessful",

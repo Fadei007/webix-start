@@ -72,7 +72,7 @@ function saveCategory(){
         if(categoryForm.isDirty()){
             //Protection against XSS
             formItem.value = webix.template.escape(formItem.value);
-
+            
 
             if(categoriesTable.exists(formItemId)){
                 
@@ -81,6 +81,8 @@ function saveCategory(){
             }else{
                 categories.add(formItem);      
             };
+
+            categoriesTable.unselect(formItemId);
 
             webix.message({
                 text: "Validation is succsessful",
