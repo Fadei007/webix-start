@@ -40,11 +40,12 @@ export const dataTable = {
             return false;
         }
     },
-    ready: function(){
-
-        for(let id of this.data.order){
-            this.getItem(id).category = randomInteger(1, categories.count()); 
+    scheme:{
+        $init: function(el){
+            if (!el.category) el.category = randomInteger(1, categories.count())
         }
+    },
+    ready: function(){
 
         $$("filmForm").bind($$("filmsTable"));
         this.registerFilter(
