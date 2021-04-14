@@ -98,9 +98,9 @@ function saveFilm(){
             }else{
                 //Adding rank for new film
                 formItem.rank = rank;
-                console.log(formItem)
+
                 filmForm.save(formItem);
-                console.log(formItem)
+
                 
             };
 
