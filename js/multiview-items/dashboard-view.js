@@ -40,12 +40,12 @@ export const dataTable = {
             return false;
         }
     },
-    scheme: {
-        $init: function(el){
-            el.category = randomInteger(1, categories.count());
-        }
-    },
     ready: function(){
+
+        for(let id of this.data.order){
+            this.getItem(id).category = randomInteger(1, categories.count()); 
+        }
+
         $$("filmForm").bind($$("filmsTable"));
         this.registerFilter(
             $$("yearsFilter"),
@@ -98,8 +98,9 @@ function saveFilm(){
             }else{
                 //Adding rank for new film
                 formItem.rank = rank;
-
+                console.log(formItem)
                 filmForm.save(formItem);
+                console.log(formItem)
                 
             };
 

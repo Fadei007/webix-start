@@ -22,6 +22,7 @@ export const admin = {
                 function(){
                     const categoryForm = $$("categoryForm");
                     const formItemId = categoryForm.getValues().id;
+                    console.log(categories)
         
                     categories.remove(id);
 
